@@ -54,6 +54,21 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ onFileSelect, onCreateFile 
   const handleCreateFile = () => {
     onCreateFile();
   };
+
+  // Handle file deletion
+  const handleDeleteFile = async (e: React.MouseEvent, fileId: string) => {
+    e.stopPropagation();
+    if (!window.confirm('Are you sure you want to delete this file?')) {
+      return;
+    }
+    try {
+      await driveService.deleteFile(fileId);
+      loadFiles();
+    } catch (err: any) {
+      console.error('Error deleting file:', err);
+      setError(err.message || 'Failed to delete file');
+    }
+  };
   
   // Render file icon based on mime type
   const renderFileIcon = (mimeType: string) => {
@@ -116,6 +131,12 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ onFileSelect, onCreateFile 
               <span className="file-icon">{renderFileIcon(file.mimeType)}</span>
               <span className="file-name">{file.name}</span>
               <span className="file-modified">{formatDate(file.modifiedTime)}</span>
+              <button 
+              className="delete-button"
+              onClick={(e) => handleDeleteFile(e, file.id)}
+            >
+              🗑️
+            </button>
             </div>
           ))}
         </div>

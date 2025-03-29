@@ -176,6 +176,21 @@ app.put('/files/:fileId/content', async (req, res) => {
   }
 });
 
+// Delete file
+app.delete('/files/:fileId', async (req, res) => {
+  console.log("delete file request");
+  try {
+    const { fileId } = req.params;
+    await drive.files.delete({
+      fileId
+    });
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting file:', error);
+    res.status(500).json({ error: 'Failed to delete file' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

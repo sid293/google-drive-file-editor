@@ -54,6 +54,15 @@ class DriveService {
     });
     if (!response.ok) throw new Error('Failed to update file');
   }
+
+
+  async deleteFile(fileId: string): Promise<void> {
+    const response = await fetch(`${this.apiBaseUrl}/files/${fileId}`, {
+      method: 'DELETE',
+      credentials: 'include'
+    });
+    if (!response.ok) throw new Error('Failed to delete file');
+  }
 }
 
 const driveService = new DriveService();

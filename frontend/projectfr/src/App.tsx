@@ -57,6 +57,13 @@ function App() {
       setFileContent(response.content)
       setFileName(response.name)
       setSelectedFileId(fileId)
+
+      //Get file metadata to ensure we have the name 
+      const file = await driveService.listFiles()
+      const selectedFile = file.find((file) => file.id === fileId)
+      if (selectedFile) {
+        setFileName(selectedFile.name)  
+      }
     } catch (error) {
       console.error('Error loading file:', error)
       alert('Failed to load file')
@@ -76,6 +83,11 @@ function App() {
     }
 
     try {
+      if(selectedFileId){
+        await driveService.updateFileContent(selectedFileId, fileContent)
+        alert('File updated successfully!')
+        return
+      }
       await driveService.createTextFile(fileName, fileContent)
       alert('File saved successfully!')
     } catch (error) {
