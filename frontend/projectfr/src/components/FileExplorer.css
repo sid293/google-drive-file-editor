@@ -1,0 +1,14 @@
+.file-item {
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.file-item:hover {
+  background-color: #f0f0f0;
+}
+
+.file-item.active {
+  background-color: #e3f2fd;
+}
