@@ -17,10 +17,9 @@ function App() {
   const [selectedFileId, setSelectedFileId] = useState('')
 
   useEffect(() => {
-    // Check authentication status when component mounts
     const checkAuth = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/auth/status', {
+        const response = await fetch(import.meta.env.VITE_API_BASE_URL+'/api/auth/status', {
           credentials: 'include'
         })
         const data = await response.json()
@@ -40,12 +39,11 @@ function App() {
   const handleGoogleSignIn = async () => {
     try {
       console.log("handleGoogleSignIn")
-      let URL = "http://localhost:5000"+"/auth/google/url"
+      let URL = import.meta.env.VITE_API_BASE_URL+"/auth/google/url"
       let oauthUrlResponse = await fetch(URL);
       let oauthUrl = await oauthUrlResponse.json()
       console.log("oauthUrl: ",oauthUrl.url)
       window.location.href = oauthUrl.url
-      // window.location.href = 'http://localhost:3000/auth/google'
     } catch (error) {
       console.error('Google Sign-in failed:', error)
     }
@@ -58,7 +56,6 @@ function App() {
       setFileName(response.name)
       setSelectedFileId(fileId)
 
-      //Get file metadata to ensure we have the name 
       const file = await driveService.listFiles()
       const selectedFile = file.find((file) => file.id === fileId)
       if (selectedFile) {
@@ -100,7 +97,7 @@ function App() {
     <div className="app-container">
       {!isSignedIn ? (
         <div className="google-signin-container">
-          <h1>Welcome to Google Drive Editor</h1>
+          <h1>Google Drive Editor</h1>
           <button className="google-signin-button" onClick={handleGoogleSignIn}>
             Sign in with Google
           </button>

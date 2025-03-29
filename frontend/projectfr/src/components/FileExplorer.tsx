@@ -19,17 +19,11 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ onFileSelect, onCreateFile 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   
-  // Load files when component mounts
   useEffect(() => {
     loadFiles();
   }, []);
   
-  // Load files from Google Drive
   const loadFiles = async () => {
-    // if (!driveService.isAuthenticated()) {
-    //   setError('Not authenticated. Please sign in first.');
-    //   return;
-    // }
     
     setLoading(true);
     setError(null);
@@ -45,17 +39,14 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ onFileSelect, onCreateFile 
     }
   };
   
-  // Handle file selection
   const handleFileClick = (fileId: string) => {
     onFileSelect(fileId);
   };
   
-  // Handle file creation
   const handleCreateFile = () => {
     onCreateFile();
   };
 
-  // Handle file deletion
   const handleDeleteFile = async (e: React.MouseEvent, fileId: string) => {
     e.stopPropagation();
     if (!window.confirm('Are you sure you want to delete this file?')) {
@@ -70,7 +61,6 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ onFileSelect, onCreateFile 
     }
   };
   
-  // Render file icon based on mime type
   const renderFileIcon = (mimeType: string) => {
     if (mimeType.includes('folder')) {
       return '📁';
@@ -87,7 +77,6 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ onFileSelect, onCreateFile 
     }
   };
   
-  // Format date
   const formatDate = (dateString?: string) => {
     if (!dateString) return '';
     return new Date(dateString).toLocaleString();

@@ -12,7 +12,7 @@ interface DriveFileContent {
 }
 
 class DriveService {
-  private apiBaseUrl = 'http://localhost:5000'; // Your backend URL
+  private apiBaseUrl = import.meta.env.VITE_API_BASE_URL; 
 
   async listFiles(): Promise<DriveFile[]> {
     const response = await fetch(`${this.apiBaseUrl}/files`, {
