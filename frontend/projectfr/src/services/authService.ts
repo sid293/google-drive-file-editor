@@ -63,7 +63,7 @@ class AuthService {
 
   private handleAuthUser(googleUser: any): void {
     const profile = googleUser.getBasicProfile();
-    const authResponse = googleUser.getAuthResponse();
+    // const authResponse = googleUser.getAuthResponse();
 
     this.user = {
       id: profile.getId(),
@@ -72,10 +72,10 @@ class AuthService {
       picture: profile.getImageUrl(),
     };
 
-    const token = authResponse.access_token;
-    import('./driveService').then(module => {
-      const driveService = module.default;
-    });
+    // const token = authResponse.access_token;
+    // import('./driveService').then(module => {
+      // const driveService = module.default;
+    // });
   }
 
   async signIn(): Promise<AuthResponse> {
@@ -119,9 +119,9 @@ class AuthService {
       await this.googleAuth.signOut();
       this.user = null;
 
-      import('./driveService').then(module => {
-        const driveService = module.default;
-      });
+      // import('./driveService').then(module => {
+        // const driveService = module.default;
+      // });
 
       return { success: true };
     } catch (error: any) {
